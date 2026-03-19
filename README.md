@@ -1,8 +1,7 @@
-# Pakendimuudatuste aruanne (Power BI) – Lõputöö
+# Pakendimuudatuste aruanne
 
 **Autor:** Mariliis Toon  
-**Teema:** Pakendimuudatuste (IMD) ülevaade ja analüüs Power BI abil  
-**Eesmärk:** luua Power BI aruanne, mis toetab otsustamist: lühendada keskmist kestvust ja tõsta SLA ≤30 päeva katvust, hoides avatud vs suletud IMD-de voo tasakaalus.  
+**Teema:** Pakendimuudatuste (IMD) ülevaade ja analüüs Power BI abil   
 **Programm:** Power BI  
 **Andmeallikad:** SQL Databases, Smartflow Loftware
 
@@ -24,7 +23,7 @@ Pakendimuudatuste (IMD) protsessi ajad kõiguvad ning perioodidel, mil avamisi o
   - perioodidel, mil **Opened > Closed**, kasvab **WIP** ja **Avg duration** pikeneb.
 
 ### PREPARE (andmed, kvaliteet)
-- Allikad: Smartflow Loftware andmebaas 
+- Allikad: SQl Databases, Smartflow Loftware andmebaas 
 - Kvaliteet: eraldada IMDd AW proejktidest, eemaldada duplikaadid, puuduvad kuupäevad, kestus ≤ 0, 
 - Andmekaitse: andmed anonümiseerida
 
@@ -32,7 +31,7 @@ Pakendimuudatuste (IMD) protsessi ajad kõiguvad ning perioodidel, mil avamisi o
 
 
 
-### ANALYZE (visualiseeritavad järeldused)
+### ANALYZE
 
 #### 1) **Avg duration by Month**
 - IMD-de keskmise kestvuse (Open → Close) muutus ajas kuude lõikes
@@ -88,7 +87,6 @@ Pakendimuudatuste (IMD) protsessi ajad kõiguvad ning perioodidel, mil avamisi o
 
 - **SLA ≤30 päeva (%)**  
   Osakaal suletud IMD-dest, mis suleti **30 päeva või kiiremini**.  
-  **Loogika:** `(# suletud IMD, kus DurationDays ≤ 30) / (# kõik suletud IMD)` × 100%.
 
 - **Opened (Month)**  
   Valitud kuus **avamiste arv**: IMD, mille `OpenDate` kuulub valitud kuusse (`OpenMonth`).
@@ -97,12 +95,11 @@ Pakendimuudatuste (IMD) protsessi ajad kõiguvad ning perioodidel, mil avamisi o
   Valitud kuus **sulgemiste arv**: IMD, mille `CloseDate` kuulub valitud kuusse (`CloseMonth`).
 
 - **WIP (MonthEnd)**  
-  Kuu lõpu seisuga **pooleliolevad** IMD-d.  
-  **Loogika:** loenda IMD, millel `OpenDate ≤ kuu_lõpp` **ja** (`CloseDate` on tühi **või** `CloseDate > kuu_lõpp`).  
+  Kuu lõpu seisuga **pooleliolevad** IMD-d.   
   **Taust:** WIP = “parasjagu süsteemis olev, kuid lõpetamata töö/üksused”
 
 - **Opened vs Closed tasakaal**  
-  Voo tasakaal on **OK**, kui valitud perioodil `Opened ≈ Closed`. Kui korduvalt `Opened > Closed`, **WIP kasvab** ja keskmine kestus kipub pikenema (intuitsioon Little’i seadusest: **WIP = läbilaskevõime × tsükli aeg** stabiilses olekus).
+  Voo tasakaal on **OK**, kui valitud perioodil `Opened ≈ Closed`. Kui korduvalt `Opened > Closed`, **WIP kasvab** ja keskmine kestus kipub pikenema.
 
 ## 5. Andmekaitse ja anonüümistamine
 
