@@ -2,7 +2,7 @@
 
 **Autor:** Mariliis Toon  
 **Teema:** Pakendimuudatuste (IMD) ülevaade ja analüüs Power BI abil  
-**Eesmärk:** luua Power BI aruanne, mis toetab otsustamist: lühendada keskmist läbitöötlusaega ja tõsta SLA ≤30 päeva katvust, hoides avatud vs suletud IMD-de voo tasakaalus.  
+**Eesmärk:** luua Power BI aruanne, mis toetab otsustamist: lühendada keskmist kestvust ja tõsta SLA ≤30 päeva katvust, hoides avatud vs suletud IMD-de voo tasakaalus.  
 **Programm:** Power BI  
 **Andmeallikad:** SQL Databases, Smartflow Loftware
 
