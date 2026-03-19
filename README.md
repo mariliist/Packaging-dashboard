@@ -4,7 +4,7 @@
 **Teema:** Pakendimuudatuste (IMD) ülevaade ja analüüs Power BI abil  
 **Eesmärk:** luua Power BI aruanne, mis toetab otsustamist: lühendada keskmist läbitöötlusaega ja tõsta SLA ≤30 päeva katvust, hoides avatud vs suletud IMD-de voo tasakaalus.
 
-> Lõputöö ülesehitus järgib Google Data Analytics capstone’i protsessi **Ask – Prepare – Process – Analyze – Share/Act** ning BCS koolituse õpiväljundeid (andmete ettevalmistus, analüüs, visualiseerimine, eetika/andmekaitse, otsustugi). [1](https://github.com/marcoshsq/GoogleDataAnalyticsCapstone)[2](https://www.bcskoolitus.ee/koolitus/andmeanaluutikute-taiendkoolitusprogramm/)
+> Lõputöö ülesehitus järgib Google Data Analytics capstone’i protsessi **Ask – Prepare – Process – Analyze – Share/Act** ning BCS koolituse õpiväljundeid.
 
 ---
 
