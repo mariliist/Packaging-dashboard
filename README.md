@@ -10,7 +10,7 @@
 
 ## 1. Probleem
 
-Pakendimuudatuste (IMD) protsessi ajad kõiguvad ning perioodidel, mil avamisi on rohkem kui sulgemisi, kasvab WIP, mis omakorda venitab keskmist kestust. Vajame lihtsat Power BI ülevaadet, mis kuude lõikes näitab **Avg duration**, **Opened/Closed**, **SLA ≤30 päeva** ja võimaldab tuvastada **pudelikaelu** (nt BusinessCase’i või IMD tüübi lõikes). 
+Pakendimuudatuste (IMD) protsessi ajad kõiguvad ning perioodidel, mil avamisi on rohkem kui sulgemisi, kasvab WIPt. Vajame lihtsat Power BI ülevaadet, mis kuude lõikes näitab **Avg duration**, **Opened/Closed**, **SLA ≤30 päeva** ja võimaldab tuvastada **pudelikaelu** (nt BusinessCase’i või IMD tüübi lõikes). 
 
 **Mõõdikud:**
 - Avg duration (days) ↓ 
@@ -22,23 +22,45 @@ Pakendimuudatuste (IMD) protsessi ajad kõiguvad ning perioodidel, mil avamisi o
 ## 2. Metoodika (Ask – Prepare – Process – Analyze – Share/Act)
 
 ### ASK
-- Äriküsimus + tööhüpoteesid:  
-  - teatud BusinessCase’id (nt *Change of packaging material*) annavad ebaproportsionaalse osa mahust ja kestusest.  
+- Hüpoteesid:  
+  - teatud BusinessCase’id annavad ebaproportsionaalse osa mahust ja kestusest.  
   - perioodidel, mil **Opened > Closed**, kasvab **WIP** ja **Avg duration** pikeneb.
 
 ### PREPARE (andmed, kvaliteet)
 - Allikad: Smartflow Loftware andmebaas 
 - Kvaliteet: eraldada IMDd AW proejktidest, eemaldada duplikaadid, puuduvad kuupäevad, kestus ≤ 0, 
-- Andmekaitse: anonümiseerida
+- Andmekaitse: andmed anonümiseerida
 
 ### PROCESS (Power Query, loogika)
 
 
+
 ### ANALYZE (visualiseeritavad järeldused)
-- Trend: **Avg duration by Month**; hooajalisus/kõikumine.  
-- Voo tasakaal: **Opened vs Closed by Month**, **WIP** dünaamika.  
-- SLA: **% Closed ≤30 days by Month** ja segmentide kaupa.  
-- Pareto: **Total IMDs by BusinessCase** (Top‑N + “Other”).
+
+#### 1) Trend: **Avg duration by Month**
+- IMD-de keskmise läbitöötlusaja (Open → Close) muutus ajas kuude lõikes
+
+#### 2) Voo tasakaal: **Opened vs Closed by Month** + **WIP** dünaamika
+
+- **WIP (MonthEnd)** trend – poolelioleva töö hulk kuu lõpus.
+
+**Eesmärk:**  
+- Hoida voog stabiilsena ning vältida WIP-i kuhjumist, mis pikendab läbitöötlusaegu.
+
+#### 3) **SLA: % Closed ≤30 days by Month** (ja segmentides)
+- Tähtaegadest kinnipidamise tase kuude lõikes.  
+- SLA täitmine segmentides (IMD type, BusinessCase, Country).
+
+**Eesmärk:**  
+- Tõsta SLA katvust ja vähendada kõrvalekaldeid; eristada loomult pikemaid juhtumiliike.
+
+#### 4) **Pareto: Total IMDs by BusinessCase** (Top‑N + “Other”)
+- Millised BusinessCase’i kategooriad tekitavad enamiku töökoormusest.
+
+% Closed ≤30 days by Month** ja segmentide kaupa.  
+- Pareto: **Total IMDs by BusinessCase**.
+
+---
 
 ### SHARE/ACT (otsustugi)
 
@@ -46,8 +68,17 @@ Pakendimuudatuste (IMD) protsessi ajad kõiguvad ning perioodidel, mil avamisi o
 
 ## 3. Andmemudel
 
-**IMD**  
-
+**Faktitabel**  
+- `IMD` (int)
+- `OpenDate` (date)
+- `CloseDate` (date, võib olla tühi)
+- `IMDType` (tekst; nt BTB/BTC/SC)
+- `BusinessCase` (tekst)
+- `Country` (tekst või grupp)
+- `OpenMonth = Date.StartOfMonth(OpenDate)`  
+- `CloseMonth = Date.StartOfMonth(CloseDate)`  
+- `DurationDays = if CloseDate <> null then CloseDate - OpenDate else null`  
+- `IsClosed = (CloseDate <> null)`
 
 **Dimensioonid:**  
 - `Date`   
@@ -96,8 +127,9 @@ Pakendimuudatuste (IMD) protsessi ajad kõiguvad ning perioodidel, mil avamisi o
 
 ---
 
-## 7.Järeldus
+## 7. Järeldus
 
 Kokkuvõtvalt võimaldab dashboard tuvastada perioodid ja segmendid, kus IMD protsess venib (Avg duration)
+
 ---
 
