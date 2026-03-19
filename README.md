@@ -10,12 +10,7 @@
 
 ## 1. Probleem
 
-Pakendimuudatuste (IMD) protsessi ajad kõiguvad ning perioodidel, mil avamisi on rohkem kui sulgemisi, kasvab WIPt. Vajame lihtsat Power BI ülevaadet, mis kuude lõikes näitab **Avg duration**, **Opened/Closed**, **SLA ≤30 päeva** ja võimaldab tuvastada **pudelikaelu** (nt BusinessCase’i või IMD tüübi lõikes). 
-
-**Mõõdikud:**
-- Avg duration (days) ↓ 
-- SLA ≤30 päeva (%) ↑ (eesmärk nt +8 p.p.)
-- Opened vs Closed tasakaal (WIP ei kasva mitmel järjestikusel kuul)
+Pakendimuudatuste (IMD) protsessi ajad kõiguvad ning perioodidel, mil avamisi on rohkem kui sulgemisi, kasvab WIPt. Vaja on Power BI ülevaadet, mis kuude lõikes näitab **Avg duration**, **Opened/Closed**, **SLA ≤30 päeva** ja võimaldab tuvastada **pudelikaelu** (nt BusinessCase’i või IMD tüübi lõikes). 
 
 ---
 
@@ -37,32 +32,25 @@ Pakendimuudatuste (IMD) protsessi ajad kõiguvad ning perioodidel, mil avamisi o
 
 ### ANALYZE (visualiseeritavad järeldused)
 
-#### 1) Trend: **Avg duration by Month**
-- IMD-de keskmise läbitöötlusaja (Open → Close) muutus ajas kuude lõikes
+#### 1) **Avg duration by Month**
+- IMD-de keskmise kestvuse (Open → Close) muutus ajas kuude lõikes
 
-#### 2) Voo tasakaal: **Opened vs Closed by Month** + **WIP** dünaamika
+#### 2) **Opened vs Closed by Month** + **WIP** dünaamika
 
 - **WIP (MonthEnd)** trend – poolelioleva töö hulk kuu lõpus.
 
-**Eesmärk:**  
-- Hoida voog stabiilsena ning vältida WIP-i kuhjumist, mis pikendab läbitöötlusaegu.
-
-#### 3) **SLA: % Closed ≤30 days by Month** (ja segmentides)
+#### 3) **SLA: % Closed ≤30 days by Month** 
 - Tähtaegadest kinnipidamise tase kuude lõikes.  
 - SLA täitmine segmentides (IMD type, BusinessCase, Country).
 
-**Eesmärk:**  
-- Tõsta SLA katvust ja vähendada kõrvalekaldeid; eristada loomult pikemaid juhtumiliike.
-
-#### 4) **Pareto: Total IMDs by BusinessCase** (Top‑N + “Other”)
+#### 4) Total IMDs by BusinessCase**
 - Millised BusinessCase’i kategooriad tekitavad enamiku töökoormusest.
 
-% Closed ≤30 days by Month** ja segmentide kaupa.  
-- Pareto: **Total IMDs by BusinessCase**.
+#### 5) % Closed ≤30 days by Month**
 
 ---
 
-### SHARE/ACT (otsustugi)
+### SHARE/ACT 
 
 ---
 
@@ -75,6 +63,7 @@ Pakendimuudatuste (IMD) protsessi ajad kõiguvad ning perioodidel, mil avamisi o
 - `IMDType` (tekst; nt BTB/BTC/SC)
 - `BusinessCase` (tekst)
 - `Country` (tekst või grupp)
+- 
 - `OpenMonth = Date.StartOfMonth(OpenDate)`  
 - `CloseMonth = Date.StartOfMonth(CloseDate)`  
 - `DurationDays = if CloseDate <> null then CloseDate - OpenDate else null`  
@@ -88,7 +77,7 @@ Pakendimuudatuste (IMD) protsessi ajad kõiguvad ning perioodidel, mil avamisi o
   
 ---
 
-## 4. Mõõdikud (definitsioonid)
+## 4. Mõõdikute definitsioonid
 
 - **Avg duration (days)**  
   Keskmine päevade arv IMD avamisest sulgemiseni valitud filtrikontekstis.  
